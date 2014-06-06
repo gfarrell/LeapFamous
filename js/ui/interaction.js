@@ -7,7 +7,12 @@ define(['lodash'], function() {
         this.object = obj;
     };
 
-    _.extend(Interaction.prototype, {});
+    _.extend(Interaction.prototype, {
+        destroy: function() {
+            delete this.hand;
+            delete this.object;
+        }
+    });
 
     return Interaction;
 });
