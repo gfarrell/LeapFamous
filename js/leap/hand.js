@@ -21,6 +21,12 @@ define(['lodash'], function (_){
             this._current  = hand;
         },
 
+        destroy: function() {
+            // Unset any references so this object can be garbage-collected.
+            delete this._current;
+            delete this._previous;
+        },
+
         isGrabbing: function () {
             return (this._current.grabStrength > Hand.GRAB_THRESHOLD);
         },
