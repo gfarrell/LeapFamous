@@ -3,9 +3,10 @@ define(
     [
         'lodash',
         'famous/core/Surface',
-        'famous/modifiers/Draggable'
+        'famous/modifiers/Draggable',
+        'famous/transitions/Easing'
     ],
-    function(_, Surface, DraggableModifier) {
+    function(_, Surface, DraggableModifier, Easing) {
         'use strict';
 
         var UIObject = function(context, surfaceSettings, position) {
@@ -24,7 +25,7 @@ define(
             getDefaultTransition: function() {
                 return {
                     duration: 500,
-                    curve: 'ease'
+                    curve: Easing.inOutSine
                 };
             },
 
