@@ -2,10 +2,11 @@
 define(
     [
         'lodash',
+        'registry',
         'leap/hand',
         'ui/interaction'
     ],
-    function(_, Hand, Interaction) {
+    function(_, Registry, Hand, Interaction) {
         'use strict';
 
         var InteractionController = function() {
@@ -30,11 +31,12 @@ define(
             update: function(frame) {
                 var present = [];
                 _.each(frame.hands, function(hand) {
-                    if(_.has(this.hands, hand.id)) {
+                    if(_.has(this.hands, ''+hand.id)) {
                         this.hands[hand.id].update(hand);
                     } else {
                         this.hands[hand.id] = new Hand(hand);
                     }
+                    this.hands[hand.id].setPosition(frame.interactionBox.normalizePoint(hand.stabilizedPalmPosition, true));
                     present.push(hand.id);
                 }.bind(this));
 
@@ -90,8 +92,19 @@ define(
                     if(grab && !haveInteraction) {
                         // Create interaction
                         // Store interaction
+                        var handPosNorm = Hand.normaliseCoordinatesToContext(hand.getPosition(), this.contextSize());
+                        var objAtPosn = this.objectAt(handPosNorm);
+
+                        if(objAtPosn !== undefined) {
+                            var ia = new Interaction(hand, this.objectAt(handPosNorm));
+                            this.interactions[id] = ia;
+                        }
                     }
                 }.bind(this));
+            },
+
+            contextSize: function() {
+                return Registry.get('FamousContext')._size;
             }
         });
 
