@@ -10,6 +10,7 @@
     "famous": "~0.2.1",
     "leapjs": "~0.6.0",
     "requirejs": "~2.1.14",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "microevent": "~1.1.1"
   }
 }
