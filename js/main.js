@@ -15,14 +15,30 @@ require.config({
         }
     }
 });
-require(['leapjs', 'ui/interaction_controller'], function(Leap, InteractionController) {
-    var controllerOptions = {
-            enableGestures: true
-    };
+require(
+    [
+        'leapjs',
+        'famous/core/Engine',
+        'registry',
+        'ui/interaction_controller',
+        'test/board'
+    ],
+    function(Leap, Engine, Registry, InteractionController, TestBoard) {
+        var controllerOptions = {
+                enableGestures: true
+        };
 
-    var IC = new InteractionController();
+        var context = Engine.createContext();
 
-    Leap.loop(controllerOptions, function(frame) {
-        IC.update(frame);
-    });
-});
+        var IC = new InteractionController();
+
+        Registry.register('InteractionController', IC);
+        Registry.register('FamousContext', context);
+
+        Leap.loop(controllerOptions, function(frame) {
+            IC.update(frame);
+        });
+
+        TestBoard.setup();
+    }
+);
