@@ -54,6 +54,23 @@ define(
                 }.bind(this));
             },
 
+            objectAt: function(point) {
+                // Cycle through objects
+                // Find which one is under this point
+
+                var objectsAtPosition = [];
+
+                _.each(this.objects, function(obj) {
+                    if(obj.containsPoint(point)) {
+                        objectsAtPosition.push(obj);
+                    }
+                });
+
+                // At the moment we're just returning the last object in the list
+                // This needs to be improved with some awareness of z-ordering
+                return _.last(objectsAtPosition);
+            },
+
             checkInteractions: function() {
                 // Need to see if our hands are grabbing
                 // If hand.isGrabbing() and no interaction exists, start one
