@@ -8,14 +8,16 @@ define(
     function(_, Surface, DraggableModifier) {
         'use strict';
 
-        var UIObject = function(context, surfaceSettings, position, noRender) {
+        var UIObject = function(context, surfaceSettings, position) {
             this.context = context;
 
             this.surface = new Surface(surfaceSettings);
             this.modifier = new DraggableModifier();
-            this.modifier.setPosition(position);
+            if(position) {
+                this.modifier.setPosition(position);
+            }
 
-            if(!noRender) this.context.add(this.modifier).add(this.surface);
+            this.context.add(this.modifier).add(this.surface);
         };
 
         _.extend(UIObject.prototype, {
