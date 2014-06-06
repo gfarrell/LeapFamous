@@ -70,7 +70,7 @@ define(
 
                 // At the moment we're just returning the last object in the list
                 // This needs to be improved with some awareness of z-ordering
-                return _.last(objectsAtPosition);
+                return objectsAtPosition.length > 0 ? _.last(objectsAtPosition) : null;
             },
 
             checkInteractions: function() {
@@ -95,8 +95,8 @@ define(
                         var handPosNorm = Hand.normaliseCoordinatesToContext(hand.getPosition(), this.contextSize());
                         var objAtPosn = this.objectAt(handPosNorm);
 
-                        if(objAtPosn !== undefined) {
-                            var ia = new Interaction(hand, this.objectAt(handPosNorm));
+                        if(objAtPosn !== null) {
+                            var ia = new Interaction(hand, objAtPosn);
                             this.interactions[id] = ia;
                         }
                     }
