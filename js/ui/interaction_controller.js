@@ -35,7 +35,6 @@ define(
                     } else {
                         this.hands[hand.id] = new Hand(hand);
                     }
-
                     present.push(hand.id);
                 }.bind(this));
 
@@ -46,11 +45,12 @@ define(
 
             pruneHandsNotInList: function(list) {
                 var ourHands = _.keys(this.hands);
-                var pruneList = _.difference(ourHands, list);
 
-                _.each(pruneList, function(id) {
-                    this.hands[id].destroy();
-                    delete this.hands[id];
+                _.each(ourHands, function(id) {
+                    if(list.indexOf(parseInt(id)) == -1) {
+                        this.hands[id].destroy();
+                        delete this.hands[id];
+                    }
                 }.bind(this));
             },
 
