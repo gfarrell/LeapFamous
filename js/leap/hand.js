@@ -31,18 +31,30 @@ define(['lodash', 'microevent'], function (_, MicroEvent){
             delete this._previous;
         },
 
-        isGrabbing: function () {
-            return (this._current.grabStrength > Hand.GRAB_THRESHOLD);
+        setPosition: function(point) {
+            this.normalisedPosition = point;
         },
 
-        getGrabLocation: function() {
-            return this._current.stabilizedPalmPosition;
+        getPosition: function() {
+            return this.normalisedPosition;
+        },
+
+        isGrabbing: function () {
+            return (this._current.grabStrength > Hand.GRAB_THRESHOLD);
         },
 
         isPinching: function() {
             return this._current.pinchStrength > Hand.PINCH_THRESHOLD;
         }
     });
+
+    Hand.normaliseCoordinatesToContext = function(leapCoordinates, contextSize) {
+        // Need to reverse y-axis
+        var c = [leapCoordinates[0], 1-leapCoordinates[1]];
+
+        // leap coords are between [0,1] so just multiply contextSize
+        return [c[0] * contextSize[0], c[1] * contextSize[1]];
+    };
 
     return Hand;
 });
