@@ -15,12 +15,14 @@ require.config({
         }
     }
 });
-require(['leapjs'], function(Leap) {
+require(['leapjs', 'ui/interaction_controller'], function(Leap, InteractionController) {
     var controllerOptions = {
             enableGestures: true
     };
 
-    Leap.loop(controllerOptions, function(frame) {
+    var IC = new InteractionController();
 
+    Leap.loop(controllerOptions, function(frame) {
+        IC.update(frame);
     });
 });
