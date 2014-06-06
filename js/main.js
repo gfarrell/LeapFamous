@@ -4,7 +4,8 @@ require.config({
     paths: {
         famous: '../lib/famous',
         leapjs: '../lib/leapjs/leap-0.6.0',
-        lodash: '../lib/lodash/dist/lodash'
+        lodash: '../lib/lodash/dist/lodash',
+        microevent: '../lib/microevent/microevent'
     },
     shim: {
         leapjs: {
