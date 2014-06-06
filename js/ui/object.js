@@ -44,17 +44,23 @@ define(
                 return this.surface.getSize();
             },
 
-            containsPoint: function(point) {
+            getBoundingBox: function() {
                 var box = [];
                 var size = this.getSize();
                 var posn = this.getPosition();
-                var x = point[0], y = point[1];
 
                 box[0] = posn[0];
                 box[1] = posn[0] + size[0];
 
                 box[2] = posn[1];
-                box[2] = posn[1] + size[1];
+                box[3] = posn[1] + size[1];
+
+                return box;
+            },
+
+            containsPoint: function(point) {
+                var box = this.getBoundingBox();
+                var x = point[0], y = point[1];
 
                 return (x >= box[0] && x <= box[1] && y >= box[2] && y <= box[3]);
             }
