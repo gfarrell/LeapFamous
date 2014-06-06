@@ -1,8 +1,10 @@
 /* global define */
-define(['lodash'], function (_){
+define(['lodash', 'microevent'], function (_, MicroEvent){
     var Hand = function(hand_obj) {
         this._current = hand_obj;
     };
+
+    MicroEvent.mixin(Hand);
 
     Hand.GRAB_THRESHOLD = 0.7;
     Hand.PINCH_THRESHOLD = 0.7;
@@ -19,6 +21,8 @@ define(['lodash'], function (_){
 
             this._previous = this._current;
             this._current  = hand;
+
+            this.trigger('update');
         },
 
         destroy: function() {
