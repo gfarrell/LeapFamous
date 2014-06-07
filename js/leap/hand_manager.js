@@ -70,6 +70,27 @@ define(['lodash'], function(_) {
             } else {
                 return false;
             }
+        },
+
+        /**
+         * Either creates a new hand object or updates an existing one depending on the hand id.
+         * @param  {LeapJS.Hand} lm_hand_obj
+         * @return {Hand}        The Hand instance corresponding to the given hand object.
+         */
+        updateHandFromDevice: function(lm_hand_obj) {
+            var id = lm_hand_obj.id;
+            var hand;
+
+            if(this.hasHand(id)) {
+                hand = this.getHand(id);
+                hand.update(lm_hand_obj);
+                Registry.publish('HandUpdated', id, hand);
+            } else {
+                hand = new Hand(lm_hand_obj);
+                this.addHand(hand);
+            }
+
+            return hand;
         }
     });
 
