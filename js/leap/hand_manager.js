@@ -39,7 +39,7 @@ define(['lodash'], function(_) {
 
             this._hands[id] = hand;
 
-            Registry.publish('handAdded', id, hand);
+            Registry.publish('HandAdded', id, hand);
         },
 
         /**
@@ -64,7 +64,7 @@ define(['lodash'], function(_) {
                 this.getHand(id).destroy();
                 delete this._hands[id];
 
-                Registry.publish('handDestroyed', id);
+                Registry.publish('HandDestroyed', id);
 
                 return true;
             } else {
