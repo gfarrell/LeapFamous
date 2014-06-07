@@ -2,6 +2,7 @@
 define(['lodash', 'microevent'], function (_, MicroEvent){
     var Hand = function(hand_obj) {
         this._current = hand_obj;
+        this.id = hand_obj.id;
     };
 
     MicroEvent.mixin(Hand);
@@ -10,12 +11,8 @@ define(['lodash', 'microevent'], function (_, MicroEvent){
     Hand.PINCH_THRESHOLD = 0.7;
 
     _.extend(Hand.prototype, {
-        id: function() {
-            return this._current.id;
-        },
-
         update: function(hand) {
-            if(hand.id != this.id()) {
+            if(hand.id != this.id) {
                 throw new Error('Tried to update with different hand.');
             }
 
