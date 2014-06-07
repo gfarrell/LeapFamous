@@ -22,6 +22,12 @@ define(
         };
 
         _.extend(UIObject.prototype, {
+            destroy: function() {
+                delete this.context;
+                delete this.surface;
+                delete this.modifier;
+            },
+
             getDefaultTransition: function() {
                 return {
                     duration: 500,
