@@ -2,16 +2,34 @@
 define(['lodash'], function(_) {
     'use strict';
 
-    var HandManager = function() {
-        this._hands = {};
-        this._destroyQueue = [];
-    };
+    var HandManager = function() {};
 
     _.extend(HandManager.prototype, {
+        /**
+         * A list of hands with ID keys
+         * @type {Object}
+         */
+        _hands: {},
+
+        /**
+         * Queue of Hand objects to be destroyed.
+         * @type {Array}
+         */
+        _destroyQueue: [],
+
+        /**
+         * Whether we have the specified Hand.
+         * @param  {Number|String} id the Hand ID
+         * @return {Boolean}
+         */
         hasHand: function(id) {
             return _.has(this._hands, String(id));
         },
 
+        /**
+         * Add a Hand to the list.
+         * @param {Hand} hand the Hand object to add.
+         */
         addHand: function(hand) {
             var id = hand.id;
 
@@ -22,6 +40,11 @@ define(['lodash'], function(_) {
             this._hands[id] = hand;
         },
 
+        /**
+         * Retrieve a specified Hand.
+         * @param  {Number|String} id the Hand ID
+         * @return {Hand}
+         */
         getHand: function(id) {
             if(this.hasHand(id)) {
                 return this._hands[id];
