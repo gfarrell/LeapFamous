@@ -54,6 +54,23 @@ define(['lodash'], function(_) {
                 return null;
             }
         },
+
+        /**
+         * Destroys a Hand object and removes it from the manager.
+         * @param {Number|String} id the Hand ID.
+         */
+        destroyHand: function(id) {
+            if(this.hasHand(id)) {
+                this.getHand(id).destroy();
+                delete this._hands[id];
+
+                Registry.publish('handDestroyed', id);
+
+                return true;
+            } else {
+                return false;
+            }
+        }
     });
 
     return HandManager;
