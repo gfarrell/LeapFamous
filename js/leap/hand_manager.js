@@ -38,6 +38,8 @@ define(['lodash'], function(_) {
             }
 
             this._hands[id] = hand;
+
+            Registry.publish('handAdded', id, hand);
         },
 
         /**
