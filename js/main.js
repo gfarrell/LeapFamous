@@ -21,11 +21,11 @@ require(
         'leapjs',
         'famous/core/Engine',
         'registry',
-        'ui/trackers_manager', 'ui/object_manager',
+        'leap/hand_manager', 'ui/trackers_manager', 'ui/object_manager',
         'ui/interaction_controller',
         'test/board'
     ],
-    function(Leap, Engine, Registry, HandTrackerManager, UIObjectManager, InteractionController, TestBoard) {
+    function(Leap, Engine, Registry, HandManager, HandTrackerManager, UIObjectManager, InteractionController, TestBoard) {
         var controllerOptions = {
                 enableGestures: true
         };
@@ -34,6 +34,7 @@ require(
         var context = Engine.createContext();
 
         // Managers
+        var HM  = new HandManager();
         var HTM = new HandTrackerManager();
         var UOM = new UIObjectManager();
 
@@ -42,13 +43,19 @@ require(
 
         // Register relevant things in the Registry
         Registry.register('FamousContext', context);
+        Registry.register('HandManager', HM);
         Registry.register('HandTrackerManager', HTM);
         Registry.register('UIObjectManager', UOM);
         Registry.register('InteractionController', IC);
 
 
         Leap.loop(controllerOptions, function(frame) {
-            IC.update(frame);
+            _.each(frame.hands, function(hand) {
+                var h = HM.updateHandFromDevice(hand, frame.id);
+                h.setPosition(frame.interactionBox.normalizePoint(hand.stabilizedPalmPosition, true));
+            });
+
+            HM.removeOldHands(frame.id);
         });
 
         TestBoard.setup();
