@@ -1,5 +1,5 @@
 /* global define */
-define(['lodash'], function(_) {
+define(['lodash', 'registry', 'leap/hand'], function(_, Registry, Hand) {
     'use strict';
 
     var HandManager = function() {};
