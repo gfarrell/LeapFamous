@@ -5,7 +5,7 @@ define(['registry', 'ui/object'], function(Registry, UIObject) {
     return {
         setup: function() {
             // create some surfaces
-            Registry.get('InteractionController').registerObject(
+            Registry.get('UIObjectManager').registerObject(
                 new UIObject(Registry.get('FamousContext'), {
                     size: [200, 200],
                     content: 'Hello World',
