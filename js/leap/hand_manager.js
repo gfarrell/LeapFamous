@@ -91,6 +91,13 @@ define(['lodash', 'registry', 'leap/hand'], function(_, Registry, Hand) {
             }
 
             return hand;
+        /**
+         * Cycles through hands, applying the callback to each.
+         * @param {Function} callback the callback to apply on each loop.
+         * @param {Mixed}    thisArg  callback bind.
+         */
+        forEach: function(callback, thisArg) {
+            _.each(this._hands, callback, thisArg);
         }
     });
 
