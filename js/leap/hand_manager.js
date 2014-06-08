@@ -12,12 +12,6 @@ define(['lodash', 'registry', 'leap/hand'], function(_, Registry, Hand) {
         _hands: {},
 
         /**
-         * Queue of Hand objects to be destroyed.
-         * @type {Array}
-         */
-        _destroyQueue: [],
-
-        /**
          * Whether we have the specified Hand.
          * @param  {Number|String} id the Hand ID
          * @return {Boolean}
@@ -74,10 +68,11 @@ define(['lodash', 'registry', 'leap/hand'], function(_, Registry, Hand) {
 
         /**
          * Either creates a new hand object or updates an existing one depending on the hand id.
-         * @param  {LeapJS.Hand} lm_hand_obj
-         * @return {Hand}        The Hand instance corresponding to the given hand object.
+         * @param  {LeapJS.Hand} lm_hand_obj  The Leap Motion hand object.
+         * @param  {String}                   The ID of the update frame.
+         * @return {Hand}                     The Hand instance corresponding to the given hand object.
          */
-        updateHandFromDevice: function(lm_hand_obj) {
+        updateHandFromDevice: function(lm_hand_obj, frameID) {
             var id = lm_hand_obj.id;
             var hand;
 
@@ -90,7 +85,22 @@ define(['lodash', 'registry', 'leap/hand'], function(_, Registry, Hand) {
                 this.addHand(hand);
             }
 
+            hand.last_updated = parseInt(frameID);
+
             return hand;
+        },
+
+        removeOldHands: function(current_frame_id) {
+            var id = parseInt(current_frame_id);
+
+            this.forEach(function(hand) {
+                // Remove hands that haven't been updated for ten frames
+                if(hand.last_updated < (id - 10)) {
+                    this.destroyHand(hand.id);
+                }
+            }, this);
+        },
+
         /**
          * Cycles through hands, applying the callback to each.
          * @param {Function} callback the callback to apply on each loop.
