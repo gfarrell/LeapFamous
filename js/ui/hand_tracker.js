@@ -6,11 +6,10 @@ define(['lodash', 'registry', 'ui/object', 'ui/interaction'], function(_, Regist
         this.surface = new UIObject(Registry.get('FamousContext'), {
             size: [50, 50],
             properties: {
-                opacity: 0.25,
                 background: 'red',
                 borderRadius: '50%'
             }
-        });
+        }, {opacity: 0.25});
 
         this.interaction = new Interaction(hand, this.surface);
     };
