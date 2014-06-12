@@ -5,7 +5,7 @@ require.config({
         famous:  '../lib/famous',
         leapjs:  '../lib/leapjs/leap-0.6.0',
         lodash:  '../lib/lodash/dist/lodash',
-        eventjs: '../lib/Event.js/event.js'
+        eventjs: '../lib/Event.js/event'
     },
     shim: {
         leapjs: {
