@@ -21,6 +21,9 @@ define(
 
         _.extend(UIObject.prototype, {
             destroy: function() {
+                // destroy the surface
+                this.surface.render = function() { return null; };
+
                 delete this.context;
                 delete this.surface;
                 delete this.modifier;
