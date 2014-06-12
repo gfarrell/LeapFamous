@@ -6,13 +6,13 @@ define(['lodash', 'registry', 'leap/hand'], function(_, Registry, Hand) {
         this.hand = hand;
         this.object = obj;
 
-        this.hand.bind('update', this.moveWithHand.bind(this));
+        this.hand.subscribe('update', this.moveWithHand, this);
     };
 
     _.extend(Interaction.prototype, {
         destroy: function() {
             // Unbind events
-            this.hand.unbind('update', this.moveWithHand.bind(this));
+            this.hand.unsubscribe('update', this.moveWithHand, this);
 
             // Remove refs
             delete this.hand;
