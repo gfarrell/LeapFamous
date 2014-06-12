@@ -3,22 +3,20 @@ define(
     [
         'lodash',
         'famous/core/Surface',
-        'famous/modifiers/Draggable',
+        'famous/modifiers/StateModifier', 'famous/modifiers/Draggable',
         'famous/transitions/Easing'
     ],
-    function(_, Surface, DraggableModifier, Easing) {
+    function(_, Surface, StateModifier, DraggableModifier, Easing) {
         'use strict';
 
-        var UIObject = function(context, surfaceSettings, position) {
+        var UIObject = function(context, surfaceSettings, stateSettings, draggableSettings) {
             this.context = context;
 
-            this.surface = new Surface(surfaceSettings);
-            this.modifier = new DraggableModifier();
-            if(position) {
-                this.modifier.setPosition(position);
-            }
+            this.surface   = new Surface(surfaceSettings);
+            this.modifier = new StateModifier(stateSettings || {});
+            this.draggable = new DraggableModifier(draggableSettings || {});
 
-            this.context.add(this.modifier).add(this.surface);
+            this.context.add(this.modifier).add(this.draggable).add(this.surface);
         };
 
         _.extend(UIObject.prototype, {
@@ -26,6 +24,7 @@ define(
                 delete this.context;
                 delete this.surface;
                 delete this.modifier;
+                delete this.draggable;
             },
 
             getDefaultTransition: function() {
@@ -37,16 +36,16 @@ define(
 
             translateBy: function(translation, instant) {
                 var transition = !instant ? this.getDefaultTransition() : {};
-                this.modifier.setRelativePosition(translation, transition);
+                this.draggable.setRelativePosition(translation, transition);
             },
 
             moveTo: function(position, instant) {
                 var transition = !instant ? this.getDefaultTransition() : {};
-                this.modifier.setPosition(position, transition);
+                this.draggable.setPosition(position, transition);
             },
 
             getPosition: function() {
-                return this.modifier.getPosition();
+                return this.draggable.getPosition();
             },
 
             getSize: function() {
