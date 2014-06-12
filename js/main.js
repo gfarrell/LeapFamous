@@ -18,6 +18,7 @@ require.config({
 });
 require(
     [
+        'lodash',
         'leapjs',
         'famous/core/Engine',
         'registry',
@@ -25,7 +26,7 @@ require(
         'ui/interaction_controller',
         'test/board'
     ],
-    function(Leap, Engine, Registry, HandManager, HandTrackerManager, UIObjectManager, InteractionController, TestBoard) {
+    function(_, Leap, Engine, Registry, HandManager, HandTrackerManager, UIObjectManager, InteractionController, TestBoard) {
         var controllerOptions = {
                 enableGestures: true
         };
