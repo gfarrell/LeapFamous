@@ -11,6 +11,6 @@
     "leapjs": "~0.6.0",
     "requirejs": "~2.1.14",
     "lodash": "~2.4.1",
-    "Event.js": "~1.0.1"
+    "Event.js": "~1.0.2"
   }
 }
