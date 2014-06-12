@@ -2,10 +2,10 @@
 require.config({
     baseUrl: '/js',
     paths: {
-        famous: '../lib/famous',
-        leapjs: '../lib/leapjs/leap-0.6.0',
-        lodash: '../lib/lodash/dist/lodash',
-        microevent: '../lib/microevent/microevent'
+        famous:  '../lib/famous',
+        leapjs:  '../lib/leapjs/leap-0.6.0',
+        lodash:  '../lib/lodash/dist/lodash',
+        eventjs: '../lib/Event.js/event.js'
     },
     shim: {
         leapjs: {
