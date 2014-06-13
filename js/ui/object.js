@@ -44,7 +44,13 @@ define(
 
             moveTo: function(position, instant) {
                 var transition = !instant ? this.getDefaultTransition() : {};
+                position = this.convertToCentreAdjustedPosition(position);
                 this.draggable.setPosition(position, transition);
+            },
+
+            convertToCentreAdjustedPosition: function(pos) {
+                var sz = this.getSize();
+                return [pos[0] - 0.5 * sz[0], pos[1] - 0.5 * sz[1]];
             },
 
             getPosition: function() {
